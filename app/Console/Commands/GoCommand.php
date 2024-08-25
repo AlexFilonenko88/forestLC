@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\Post\StoredPostEvent;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
@@ -29,18 +30,21 @@ class GoCommand extends Command
      */
     public function handle()
     {
+
+        $post = Post::factory()->create();
+        StoredPostEvent::dispatch($post);
+
         // hasOne
         // hasMany
         // belongsTo
         // belongsToMany
 
-        $profile = Profile::first();
-        $user = User::first();
-        $post = Post::first();
-        $comment = Comment::first();
-
-        dd($profile->likedPosts);
-
+//        $profile = Profile::first();
+//        $user = User::first();
+//        $post = Post::first();
+//        $comment = Comment::first();
+//
+//        dd($profile->likedPosts);
 
 
         //attach
