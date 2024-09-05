@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -58,5 +59,37 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    // Rest omitted for brevity
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function getIsAdminAttribute(): bool
+    {
+        return auth()->user()->roles->contains('title', 'admin');
     }
 }
