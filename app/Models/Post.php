@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Filters\PostFilter;
+use App\Models\Traits\HasFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +13,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasFilter;
 
 //    public function comments()
 //    {
@@ -41,5 +45,6 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
 
 }
