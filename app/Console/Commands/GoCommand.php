@@ -9,6 +9,8 @@ use App\Models\Post;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+
 class GoCommand extends Command
 {
     /**
@@ -32,7 +34,11 @@ class GoCommand extends Command
     {
 
         $post = Post::factory()->create();
-        StoredPostEvent::dispatch($post);
+
+        Log::channel('posts')->info('post {title} created', ['title' => $post->title]);
+
+//        $post = Post::factory()->create();
+//        StoredPostEvent::dispatch($post);
 
         // hasOne
         // hasMany

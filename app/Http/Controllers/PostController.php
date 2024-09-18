@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\PostException;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Response;
+use App\Http\Controllers;
 
 class PostController extends Controller
 {
@@ -54,6 +56,19 @@ class PostController extends Controller
             ],
             Response::HTTP_OK
         );
+    }
+
+    public function process()
+    {
+        $title = 'Test';
+        $post = Post::firstOrCreate([
+            'title' => $title
+        ], [
+            'profile_id' => 1,
+            'category_id' => 1,
+        ]);
+
+        PostException::checkIfPostExists($post);
     }
 }
 // Конвенция laravel

@@ -17,6 +17,7 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 });
+Route::post('/post/process', [PostController::class, 'process']);
 Route::group([
     'middleware' => [
         'jwt.auth',

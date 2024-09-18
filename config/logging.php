@@ -127,6 +127,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'post' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/posts.log'),
+            'replace_placeholders' => true,
+            'tap' => [\App\LogFormatter\PostLogFormatter::class]
+        ]
     ],
-
 ];
